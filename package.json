@@ -1,5 +1,5 @@
 {
-  "name": "facegen",
+  "name": "@egorfdrv/facegen",
   "version": "0.1.0",
   "type": "module",
   "description": "Generate unique animated faces from any string. Zero dependencies, deterministic, SVG + CSS animations.",
