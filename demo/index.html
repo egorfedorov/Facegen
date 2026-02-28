@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>facegen — generate unique animated faces from any string</title>
+  <meta name="description" content="Zero-dependency deterministic SVG avatar generator with CSS animations. Same input = same face. Always.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ======== HERO ======== -->
+  <section class="hero">
+    <div class="container">
+      <h1 class="hero-title">facegen</h1>
+      <p class="hero-subtitle">generate unique animated faces from any string</p>
+      <p class="hero-tags">
+        <span>zero dependencies</span> &middot;
+        <span>deterministic</span> &middot;
+        <span>SVG</span> &middot;
+        <span>CSS animations</span>
+      </p>
+      <div class="hero-grid" id="hero-grid"></div>
+    </div>
+  </section>
+
+  <!-- ======== INSTALL ======== -->
+  <section class="install fade-in">
+    <div class="container">
+      <p class="section-label">Install</p>
+      <h2 class="section-title">Get started in seconds</h2>
+      <div class="install-tabs">
+        <button class="install-tab active" data-pm="npm">npm</button>
+        <button class="install-tab" data-pm="bun">bun</button>
+        <button class="install-tab" data-pm="pnpm">pnpm</button>
+        <button class="install-tab" data-pm="yarn">yarn</button>
+      </div>
+      <div class="install-box">
+        <code id="install-code">npm i facegen</code>
+        <button class="copy-btn" id="copy-install">copy</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== PLAYGROUND ======== -->
+  <section class="playground fade-in">
+    <div class="container">
+      <p class="section-label">Try it</p>
+      <h2 class="section-title">Interactive playground</h2>
+      <div class="playground-area">
+        <div class="playground-input-wrap">
+          <input
+            type="text"
+            class="playground-input"
+            id="play-input"
+            placeholder="type anything..."
+            autocomplete="off"
+            spellcheck="false"
+          >
+          <div class="playground-controls">
+            <button class="size-btn" data-size="32">32px</button>
+            <button class="size-btn" data-size="48">48px</button>
+            <button class="size-btn active" data-size="64">64px</button>
+            <button class="size-btn" data-size="96">96px</button>
+            <button class="toggle-btn active" id="anim-toggle">animate: on</button>
+          </div>
+        </div>
+        <div class="playground-preview">
+          <div class="preview-item">
+            <div id="preview-small"></div>
+            <span class="preview-label">32px</span>
+          </div>
+          <div class="preview-item">
+            <div id="preview-medium"></div>
+            <span class="preview-label">64px</span>
+          </div>
+          <div class="preview-item">
+            <div id="preview-large"></div>
+            <span class="preview-label">96px</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== WHY ======== -->
+  <section class="fade-in">
+    <div class="container">
+      <p class="section-label">Why facegen?</p>
+      <h2 class="section-title">Built for real projects</h2>
+      <div class="why-grid">
+        <div class="why-card">
+          <span class="why-icon" aria-hidden="true">0</span>
+          <h3>Zero dependencies</h3>
+          <p>Pure SVG + CSS. No canvas, no runtime deps, no WebGL. Works everywhere from Node to the browser.</p>
+        </div>
+        <div class="why-card">
+          <span class="why-icon" aria-hidden="true">=</span>
+          <h3>Deterministic</h3>
+          <p>Same input string = same face. Always. No randomness, no server calls. Hash-based parameter extraction.</p>
+        </div>
+        <div class="why-card">
+          <span class="why-icon" aria-hidden="true">~</span>
+          <h3>Animated</h3>
+          <p>Eyes blink, faces float, mouths twitch. Pure CSS keyframes with unique phase offsets per avatar.</p>
+        </div>
+        <div class="why-card">
+          <span class="why-icon" aria-hidden="true">A</span>
+          <h3>Accessible</h3>
+          <p>Respects prefers-reduced-motion. Proper role="img" and aria-label on every avatar. Screen-reader friendly.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== PROPS ======== -->
+  <section class="fade-in">
+    <div class="container">
+      <p class="section-label">API</p>
+      <h2 class="section-title">Props reference</h2>
+      <div class="props-table-wrap">
+        <table class="props-table">
+          <thead>
+            <tr>
+              <th>Prop</th>
+              <th>Type</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>seed</td>
+              <td>string</td>
+              <td>&mdash;</td>
+              <td>Any string &mdash; email, username, UUID. Determines the face.</td>
+            </tr>
+            <tr>
+              <td>size</td>
+              <td>number</td>
+              <td>64</td>
+              <td>Avatar size in pixels. Below 32px, animations are disabled.</td>
+            </tr>
+            <tr>
+              <td>animate</td>
+              <td>boolean</td>
+              <td>true</td>
+              <td>Enable blinking, floating, and mouth twitching animations.</td>
+            </tr>
+            <tr>
+              <td>alt</td>
+              <td>string</td>
+              <td>"Avatar"</td>
+              <td>Accessible label for the avatar (React only).</td>
+            </tr>
+            <tr>
+              <td>className</td>
+              <td>string</td>
+              <td>&mdash;</td>
+              <td>CSS class for the wrapper element (React only).</td>
+            </tr>
+            <tr>
+              <td>style</td>
+              <td>CSSProperties</td>
+              <td>&mdash;</td>
+              <td>Inline styles for the wrapper element (React only).</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== CODE EXAMPLES ======== -->
+  <section class="fade-in">
+    <div class="container">
+      <p class="section-label">Usage</p>
+      <h2 class="section-title">Code examples</h2>
+      <div class="code-examples">
+
+        <!-- React -->
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-block-lang">React</span>
+            <button class="copy-btn code-copy-btn">copy</button>
+          </div>
+          <pre><code><span class="kw">import</span> { <span class="fn">Facegen</span> } <span class="kw">from</span> <span class="str">'facegen'</span>;
+<span class="kw">import</span> <span class="str">'facegen/css'</span>;
+
+<span class="kw">function</span> <span class="fn">UserAvatar</span>({ user }) {
+  <span class="kw">return</span> &lt;<span class="tag">Facegen</span> <span class="attr">seed</span>={user.email} <span class="attr">size</span>={48} <span class="attr">animate</span> /&gt;;
+}</code></pre>
+        </div>
+
+        <!-- Vanilla JS -->
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-block-lang">Vanilla JS</span>
+            <button class="copy-btn code-copy-btn">copy</button>
+          </div>
+          <pre><code><span class="kw">import</span> { <span class="fn">generateFaceSvg</span> } <span class="kw">from</span> <span class="str">'facegen'</span>;
+
+<span class="kw">const</span> svg = <span class="fn">generateFaceSvg</span>(<span class="str">'alice@example.com'</span>, {
+  <span class="attr">size</span>: 48,
+  <span class="attr">animate</span>: <span class="kw">true</span>,
+});
+
+document.<span class="fn">getElementById</span>(<span class="str">'avatar'</span>).innerHTML = svg;</code></pre>
+        </div>
+
+        <!-- Data URI -->
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-block-lang">img tag / data URI</span>
+            <button class="copy-btn code-copy-btn">copy</button>
+          </div>
+          <pre><code><span class="kw">import</span> { <span class="fn">generateFaceSvg</span> } <span class="kw">from</span> <span class="str">'facegen'</span>;
+
+<span class="kw">const</span> svg = <span class="fn">generateFaceSvg</span>(<span class="str">'bob'</span>, { <span class="attr">size</span>: 64 });
+<span class="kw">const</span> dataUri = <span class="str">`data:image/svg+xml,${</span><span class="fn">encodeURIComponent</span>(svg)<span class="str">}`</span>;
+
+<span class="cm">// Use as &lt;img&gt; src (no animations, but works everywhere)</span>
+<span class="kw">const</span> img = <span class="kw">new</span> <span class="fn">Image</span>();
+img.src = dataUri;</code></pre>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== GALLERY ======== -->
+  <section class="fade-in">
+    <div class="container">
+      <p class="section-label">Gallery</p>
+      <h2 class="section-title">Every string, a unique face</h2>
+      <div class="gallery-grid" id="gallery-grid"></div>
+    </div>
+  </section>
+
+  <!-- ======== FOOTER ======== -->
+  <footer class="footer">
+    <div class="container">
+      <p>facegen &mdash; MIT License</p>
+      <div class="footer-links">
+        <a href="https://github.com/facegen/facegen">GitHub</a>
+        <a href="https://www.npmjs.com/package/facegen">npm</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="demo.js"></script>
+</body>
+</html>

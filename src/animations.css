@@ -1,0 +1,53 @@
+/* === Facegen Animations === */
+
+/* Blink: eyelids scale to hide, then reappear */
+@keyframes ga-blink {
+  0%, 92%, 100% { transform: scaleY(0); }
+  95%, 97%      { transform: scaleY(1); }
+}
+
+/* Idle float: subtle vertical bob */
+@keyframes ga-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-1.5px); }
+}
+
+/* Mouth micro-twitch */
+@keyframes ga-mouth-twitch {
+  0%, 90%, 100% { transform: scaleX(1); }
+  93%, 97%      { transform: scaleX(1.06); }
+}
+
+/* Eyelids – initially invisible (scaleY 0), blink pops them visible briefly */
+.ga-eyelid {
+  transform: scaleY(0);
+  animation: ga-blink 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Idle float on the whole face group */
+.ga-face-animated {
+  animation: ga-float 6s ease-in-out infinite;
+}
+
+/* Mouth group twitch */
+.ga-mouth-animated {
+  transform-origin: 50px 66px;
+  animation: ga-mouth-twitch 7s ease-in-out infinite;
+}
+
+/* Eyes group – no extra animation needed, blink is on .ga-eyelid children */
+.ga-eyes-animated {}
+
+/* ===  prefers-reduced-motion  === */
+@media (prefers-reduced-motion: reduce) {
+  .ga-eyelid,
+  .ga-face-animated,
+  .ga-mouth-animated {
+    animation: none !important;
+    transform: none !important;
+  }
+  .ga-eyelid {
+    transform: scaleY(0) !important;
+  }
+}
