@@ -19,7 +19,7 @@
   "scripts": {
     "build": "tsc && cp src/animations.css dist/animations.css",
     "prepublishOnly": "npm run build",
-    "demo": "npx serve demo"
+    "demo": "npx serve docs"
   },
   "keywords": [
     "avatar",
